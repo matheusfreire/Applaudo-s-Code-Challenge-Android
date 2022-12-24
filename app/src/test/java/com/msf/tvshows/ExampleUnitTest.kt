@@ -1,4 +1,4 @@
-package com.msf.mymovies
+package com.msf.tvshows
 
 import org.junit.Test
 

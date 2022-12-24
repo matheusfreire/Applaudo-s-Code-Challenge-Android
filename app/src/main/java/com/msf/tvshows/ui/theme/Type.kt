@@ -1,4 +1,4 @@
-package com.msf.mymovies.ui.theme
+package com.msf.tvshows.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

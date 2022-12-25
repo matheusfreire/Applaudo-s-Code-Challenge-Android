@@ -6,11 +6,11 @@ plugins {
 apply from: 'dependencies.gradle'
 
 android {
-    namespace 'com.msf.mymovies'
+    namespace 'com.msf.tvshows'
     compileSdk 32
 
     defaultConfig {
-        applicationId "com.msf.mymovies"
+        applicationId "com.msf.tvshows"
         compileSdk Versions.target_sdk_version
         minSdk Versions.min_sdk_version
         targetSdk Versions.target_sdk_version
@@ -63,14 +63,16 @@ dependencies {
     /**
      * External dependencies
      */
-    implementation AndroidLibs.koin_android
+    implementation ThirdLibs.koin_android
     implementation AndroidLibs.koltin_std
     implementation AndroidLibs.androidx_core
     implementation AndroidLibs.androidx_appcompat
     implementation AndroidLibs.material
-    implementation AndroidLibs.glide
-    implementation AndroidLibs.retrofit
-    implementation AndroidLibs.retrofit_converter_gson
+    implementation ThirdLibs.retrofit
+    implementation ThirdLibs.retrofit_converter_gson
+    implementation ThirdLibs.coil_compose
+    implementation ThirdLibs.coil
+    implementation ThirdLibs.coil_gif
     implementation AndroidLibs.coroutines_android
     implementation AndroidLibs.coroutines_core
     implementation TestLibs.espresso_idling_resource

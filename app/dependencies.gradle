@@ -25,12 +25,10 @@ ext {
         androidx_core_version       : "1.9.0",
         androidx_appcompat_version  : "1.5.1",
         material_version            : "1.3.1",
-        glide_version               : "4.14.2",
         coroutines_android_version  : "1.6.4",
         coroutines_core_version     : "1.6.4",
         google_play_core_version    : "1.10.0",
         google_play_core_ktx_version: "1.8.1",
-        retrofit_version            : "2.9.0",
         lifecycle_runtime_version   : "2.5.1",
         activity_compose_version    : "1.6.1",
     ]
@@ -41,11 +39,6 @@ ext {
         androidx_appcompat     : "androidx.appcompat:appcompat:$AndroidLibsVersions.androidx_appcompat_version",
         material               : "androidx.compose.material:material:$AndroidLibsVersions.material_version",
         constraintlayout       : "androidx.constraintlayout:constraintlayout:$AndroidLibsVersions.constraintlayout_version",
-        koin_android           : "io.insert-koin:koin-android:$Versions.koin_version",
-        glide                  : "com.github.bumptech.glide:glide:$AndroidLibsVersions.glide_version",
-        retrofit               : "com.squareup.retrofit2:retrofit:$AndroidLibsVersions.retrofit_version",
-        retrofit_converter_gson: "com.squareup.retrofit2:converter-gson:$AndroidLibsVersions.retrofit_version",
-        gson                   : "com.google.code.gson:gson:$AndroidLibsVersions.gson_version",
         coroutines_android     : "org.jetbrains.kotlinx:kotlinx-coroutines-android:$AndroidLibsVersions.coroutines_android_version",
         coroutines_core        : "org.jetbrains.kotlinx:kotlinx-coroutines-core:$AndroidLibsVersions.coroutines_core_version",
         activity_compose       : "androidx.activity:activity-compose:$AndroidLibsVersions.activity_compose_version",
@@ -54,6 +47,22 @@ ext {
         compose_tooling_preview: "androidx.compose.ui:ui-tooling-preview:$Versions.composeVersion",
         compose_tooling        : "androidx.compose.ui:ui-tooling:$Versions.composeVersion",
         compose_manifest       : "androidx.compose.ui:ui-test-manifest:$Versions.composeVersion",
+    ]
+
+    ThirdLibsVersion = [
+        coilVersion     : "2.2.2",
+        retrofit_version: "2.9.0",
+        gson_version    : "2.8.6",
+    ]
+
+    ThirdLibs = [
+        coil_compose           : "io.coil-kt:coil-compose:$ThirdLibsVersion.coilVersion",
+        coil                   : "io.coil-kt:coil:$ThirdLibsVersion.coilVersion",
+        coil_gif               : "io.coil-kt:coil-gif:$ThirdLibsVersion.coilVersion",
+        koin_android           : "io.insert-koin:koin-android:$Versions.koin_version",
+        retrofit               : "com.squareup.retrofit2:retrofit:$ThirdLibsVersion.retrofit_version",
+        retrofit_converter_gson: "com.squareup.retrofit2:converter-gson:$ThirdLibsVersion.retrofit_version",
+        gson                   : "com.google.code.gson:gson:$ThirdLibsVersion.gson_version",
     ]
 
     TestLibsVersions = [

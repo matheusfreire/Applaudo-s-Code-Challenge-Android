@@ -1,4 +1,4 @@
-package com.msf.itunessearch.network
+package com.msf.tvshows.network
 
 import android.util.Log
 import okhttp3.Interceptor
@@ -13,9 +13,9 @@ class LoggingInterceptor : Interceptor {
             "Retro",
             String.format(
                 "Sending request %s on %s%n%s",
-                request.url(),
+                request.url,
                 chain.connection(),
-                request.headers()
+                request.headers
             )
         )
 
@@ -26,9 +26,9 @@ class LoggingInterceptor : Interceptor {
             "Retro",
             String.format(
                 "Received response for %s in %.1fms%n%s",
-                response.request().url(),
+                response.request.url,
                 (t2 - t1) / 1e6,
-                response.headers()
+                response.headers
             )
         )
 

@@ -1,4 +1,4 @@
-package com.msf.itunessearch.network
+package com.msf.tvshows.network
 
 sealed class ResultWrapper<out T> {
     data class Success<out T>(val value: T) : ResultWrapper<T>()

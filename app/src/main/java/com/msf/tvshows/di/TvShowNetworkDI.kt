@@ -15,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object TvShowNetworkDI {
-    val module = module {
+    val modules = module {
         factory { LoggingInterceptor() }
         factory { provideOkHttpClient(interceptor = get()) }
         factory { provideRetrofit(okHttpClient = get()) }

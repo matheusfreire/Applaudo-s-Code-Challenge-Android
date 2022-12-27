@@ -21,7 +21,7 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
-        buildConfigField("String", "BASE_URL",'"https://api.themoviedb.org/3/"')
+        buildConfigField("String", "BASE_URL",'"https://api.themoviedb.org/3/tv/"')
         buildConfigField("String", "IMAGE_URL",'"http://image.tmdb.org/t/p/w185/"')
     }
 
@@ -47,7 +47,7 @@ android {
     }
     packagingOptions {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            resources.excludes.add("META-INF/*")
         }
     }
 }
@@ -60,10 +60,8 @@ dependencies {
     debugImplementation AndroidLibs.compose_tooling
     debugImplementation AndroidLibs.compose_manifest
 
-    /**
-     * External dependencies
-     */
     implementation ThirdLibs.koin_android
+    implementation ThirdLibs.koin_compose
     implementation AndroidLibs.koltin_std
     implementation AndroidLibs.androidx_core
     implementation AndroidLibs.androidx_appcompat
@@ -75,6 +73,7 @@ dependencies {
     implementation ThirdLibs.coil_gif
     implementation AndroidLibs.coroutines_android
     implementation AndroidLibs.coroutines_core
+    implementation AndroidLibs.compose_navigation
     implementation TestLibs.espresso_idling_resource
 
     /**

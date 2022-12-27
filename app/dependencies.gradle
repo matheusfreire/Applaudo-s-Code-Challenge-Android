@@ -31,6 +31,7 @@ ext {
         google_play_core_ktx_version: "1.8.1",
         lifecycle_runtime_version   : "2.5.1",
         activity_compose_version    : "1.6.1",
+        nav_version                 : "2.5.3"
     ]
 
     AndroidLibs = [
@@ -47,12 +48,14 @@ ext {
         compose_tooling_preview: "androidx.compose.ui:ui-tooling-preview:$Versions.composeVersion",
         compose_tooling        : "androidx.compose.ui:ui-tooling:$Versions.composeVersion",
         compose_manifest       : "androidx.compose.ui:ui-test-manifest:$Versions.composeVersion",
+        compose_navigation     : "androidx.navigation:navigation-compose:$AndroidLibsVersions.nav_version"
     ]
 
     ThirdLibsVersion = [
-        coilVersion     : "2.2.2",
-        retrofit_version: "2.9.0",
-        gson_version    : "2.8.6",
+        coilVersion         : "2.2.2",
+        retrofit_version    : "2.9.0",
+        gson_version        : "2.8.6",
+        koin_compose_version: "3.4.0"
     ]
 
     ThirdLibs = [
@@ -60,6 +63,7 @@ ext {
         coil                   : "io.coil-kt:coil:$ThirdLibsVersion.coilVersion",
         coil_gif               : "io.coil-kt:coil-gif:$ThirdLibsVersion.coilVersion",
         koin_android           : "io.insert-koin:koin-android:$Versions.koin_version",
+        koin_compose           : "io.insert-koin:koin-androidx-compose:$ThirdLibsVersion.koin_compose_version",
         retrofit               : "com.squareup.retrofit2:retrofit:$ThirdLibsVersion.retrofit_version",
         retrofit_converter_gson: "com.squareup.retrofit2:converter-gson:$ThirdLibsVersion.retrofit_version",
         gson                   : "com.google.code.gson:gson:$ThirdLibsVersion.gson_version",

@@ -3,73 +3,83 @@ package com.msf.tvshows.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.compose.AsyncImage
+import coil.compose.AsyncImagePainter
+import coil.compose.SubcomposeAsyncImage
+import coil.compose.SubcomposeAsyncImageContent
 import coil.request.ImageRequest
+import com.msf.tvshows.BuildConfig
 import com.msf.tvshows.R
+import com.msf.tvshows.model.Show
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ShowCard(title: String, rating: Double = 0.0, onClick: () -> Unit) {
+fun ShowCard(show: Show, onClick: () -> Unit) {
     Card(
         modifier = Modifier
-            .size(
-                width = 156.dp,
-                height = 216.dp
-            )
+            .size(height = 216.dp, width = 136.dp)
             .clip(shape = RoundedCornerShape(size = 8.dp)),
         onClick = { onClick.invoke() },
-        elevation = 8.dp
+        elevation = 16.dp
     ) {
         Column {
-            AsyncImage(
+            SubcomposeAsyncImage(
+                modifier = Modifier.height(height = 136.dp).fillMaxWidth(),
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://example.com/image.jpg")
+                    .data("${BuildConfig.IMAGE_URL}${show.backdropPath}")
                     .crossfade(true)
                     .build(),
-                placeholder = painterResource(R.drawable.ic_placeholder),
-                contentDescription = title,
-                contentScale = ContentScale.FillBounds,
-                modifier = Modifier.size(width = 156.dp, height = 136.dp)
+                contentDescription = show.name,
+                loading = {
+                    CircularProgressIndicator()
+                }
             )
             Column(
-                modifier = Modifier.padding(horizontal = 16.dp, vertical = 16.dp)
+                modifier = Modifier
+                    .height(height = 80.dp)
+                    .fillMaxWidth()
+                    .padding(all = 16.dp)
             ) {
                 Text(
-                    text = title,
+                    text = show.name,
                     color = colorResource(id = R.color.gray_text),
                     fontSize = 14.sp,
                     lineHeight = 24.sp,
                     textAlign = TextAlign.Right,
-                    fontWeight = FontWeight(500)
+                    fontWeight = FontWeight(500),
+                    modifier = Modifier.height(24.dp)
                 )
-                Row(modifier = Modifier.padding(top = 4.dp, bottom = 20.dp)) {
-                    RatingBar(rating = rating)
-                    Spacer(modifier = Modifier.padding(horizontal = 4.dp))
+                Spacer(modifier = Modifier.height(8.dp).fillMaxWidth())
+                Row(modifier = Modifier.height(24.dp)) {
+                    RatingBar(rating = 5.0, modifier = Modifier.size(width = 88.dp, height = 16.dp))
                     Text(
-                        text = rating.toString(),
+                        text = 5.0.toString(),
                         color = colorResource(id = R.color.gray_text),
                         fontSize = 14.sp,
                         lineHeight = 20.sp,
                         textAlign = TextAlign.Right,
-                        fontWeight = FontWeight(400)
+                        fontWeight = FontWeight(400),
+                        modifier = Modifier.size(width = 24.dp, height = 16.dp)
                     )
                 }
             }
@@ -80,5 +90,21 @@ fun ShowCard(title: String, rating: Double = 0.0, onClick: () -> Unit) {
 @Composable
 @Preview
 fun ShowCardPreview() {
-    ShowCard(title = "Test", rating = 4.5) {}
+    ShowCard(
+        show = Show(
+            backdropPath = "",
+            firstAirDate = "",
+            genreIds = listOf(),
+            id = 1,
+            name = "Name",
+            originCountry = listOf(),
+            originalLanguage = "",
+            originalName = "Nmae",
+            overview = "",
+            10.0,
+            "",
+            5.0,
+            1
+        )
+    ) {}
 }

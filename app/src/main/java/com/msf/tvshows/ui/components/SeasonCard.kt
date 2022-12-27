@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -55,7 +56,7 @@ fun SeasonCard(numberSeason: Int, detail: String, numberEpisodes: Int = 1, onCli
                     lineHeight = 23.sp,
                     color = colorResource(id = R.color.text)
                 )
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = stringResource(id = R.string.episode, numberEpisodes),
                     fontSize = 12.sp,
@@ -63,7 +64,7 @@ fun SeasonCard(numberSeason: Int, detail: String, numberEpisodes: Int = 1, onCli
                     lineHeight = 15.sp,
                     color = colorResource(id = R.color.primary)
                 )
-                Spacer(modifier = Modifier.padding(top = 8.dp))
+                Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = detail,
                     fontSize = 14.sp,

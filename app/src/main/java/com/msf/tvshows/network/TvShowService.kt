@@ -7,9 +7,9 @@ import retrofit2.http.Query
 
 interface TvShowService {
 
-    @GET("/tv/{id}")
+    @GET("/{id}")
     fun callDetail(@Path("id") code: Long, @Query("api_key") apiKey: String)
 
-    @GET("/{filter}?language=en-US&page=1")
-    fun callShowsFiltered(@Path("filter") filer: String, @Query("api_key") apiKey: String): ShowResponse
+    @GET("{filter}?language=en-US&page=1")
+    suspend fun callShowsFiltered(@Path("filter") filer: String, @Query("api_key") apiKey: String): ShowResponse
 }

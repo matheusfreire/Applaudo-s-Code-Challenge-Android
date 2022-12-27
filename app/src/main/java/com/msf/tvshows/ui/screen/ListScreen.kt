@@ -11,7 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import com.msf.tvshows.model.Show
+import com.msf.tvshows.model.list.Show
 import com.msf.tvshows.ui.components.ShowCard
 import com.msf.tvshows.viewmodel.ShowViewModel
 import com.msf.tvshows.viewmodel.UiState
@@ -26,7 +26,10 @@ fun ListScreen(
     val uiState by showViewModel.uiState.collectAsState()
     when (uiState) {
         is UiState.Loading -> ShowLoading(modifier)
-        is UiState.Loaded -> ShowListScreen(shows = (uiState as UiState.Loaded).shows, onShowClicked = onShowClicked)
+        is UiState.Loaded<*> -> ShowListScreen(
+            shows = (uiState as UiState.Loaded<*>).value as List<Show>,
+            onShowClicked = onShowClicked
+        )
         else -> ShowLoading(modifier)
     }
 }

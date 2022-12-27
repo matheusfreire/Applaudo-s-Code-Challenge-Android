@@ -2,4 +2,5 @@
     <string name="app_name">TvShows</string>
     <string name="season_title">Season %1$d</string>
     <string name="episode">%1$d Episodes</string>
+    <string name="detail_screen">detail/{id}</string>
 </resources>

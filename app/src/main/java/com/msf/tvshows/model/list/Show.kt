@@ -1,4 +1,4 @@
-package com.msf.tvshows.model
+package com.msf.tvshows.model.list
 
 import com.google.gson.annotations.SerializedName
 

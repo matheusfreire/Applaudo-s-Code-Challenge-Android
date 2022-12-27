@@ -4,8 +4,8 @@ import com.msf.tvshows.core.CoroutinesContextProvider
 import com.msf.tvshows.core.Either
 import com.msf.tvshows.core.RequestWrapper
 import com.msf.tvshows.core.UseCase
-import com.msf.tvshows.model.Show
-import com.msf.tvshows.model.ShowResponse
+import com.msf.tvshows.model.list.Show
+import com.msf.tvshows.model.list.ShowResponse
 import com.msf.tvshows.network.ResultWrapper
 import com.msf.tvshows.repository.ShowRepository
 

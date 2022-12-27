@@ -3,7 +3,9 @@ package com.msf.tvshows.di
 import com.msf.tvshows.core.CoroutinesContextProvider
 import com.msf.tvshows.core.RequestWrapper
 import com.msf.tvshows.core.RequestWrapperImpl
+import com.msf.tvshows.usecase.DetailUseCase
 import com.msf.tvshows.usecase.ShowListUseCase
+import com.msf.tvshows.viewmodel.DetailViewModel
 import com.msf.tvshows.viewmodel.ShowViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -19,7 +21,15 @@ object ShowDI {
                 requestWrapper = get()
             )
         }
+        single {
+            DetailUseCase(
+                repository = get(),
+                contextProvider = get(),
+                requestWrapper = get()
+            )
+        }
         viewModel { ShowViewModel(listUseCase = get()) }
+        viewModel { DetailViewModel(detailUseCase = get()) }
     }
 }
 

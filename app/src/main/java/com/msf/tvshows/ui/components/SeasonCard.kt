@@ -25,11 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.msf.tvshows.BuildConfig
 import com.msf.tvshows.R
+import com.msf.tvshows.model.detail.Season
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun SeasonCard(numberSeason: Int, detail: String, numberEpisodes: Int = 1, onClick: () -> Unit) {
+fun SeasonCard(season: Season, onClick: () -> Unit) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -40,7 +42,7 @@ fun SeasonCard(numberSeason: Int, detail: String, numberEpisodes: Int = 1, onCli
         Row {
             AsyncImage(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data("https://example.com/image.jpg")
+                    .data("${BuildConfig.IMAGE_URL}${season.poster_path}")
                     .crossfade(true)
                     .build(),
                 placeholder = painterResource(R.drawable.ic_placeholder),
@@ -50,7 +52,7 @@ fun SeasonCard(numberSeason: Int, detail: String, numberEpisodes: Int = 1, onCli
             )
             Column(modifier = Modifier.padding(all = 16.dp)) {
                 Text(
-                    text = stringResource(id = R.string.season_title, numberSeason),
+                    text = stringResource(id = R.string.season_title, season.season_number),
                     fontSize = 20.sp,
                     fontWeight = FontWeight(500),
                     lineHeight = 23.sp,
@@ -58,7 +60,7 @@ fun SeasonCard(numberSeason: Int, detail: String, numberEpisodes: Int = 1, onCli
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = stringResource(id = R.string.episode, numberEpisodes),
+                    text = stringResource(id = R.string.episode, season.episode_count),
                     fontSize = 12.sp,
                     fontWeight = FontWeight(600),
                     lineHeight = 15.sp,
@@ -66,7 +68,7 @@ fun SeasonCard(numberSeason: Int, detail: String, numberEpisodes: Int = 1, onCli
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = detail,
+                    text = season.overview,
                     fontSize = 14.sp,
                     fontWeight = FontWeight(400),
                     lineHeight = 20.sp,
@@ -77,12 +79,12 @@ fun SeasonCard(numberSeason: Int, detail: String, numberEpisodes: Int = 1, onCli
     }
 }
 
-@Preview
-@Composable
-fun SeasonCardPreview() {
-    SeasonCard(
-        numberSeason = 1,
-        detail = "As the rest of the team face their worst fears, Noodle Burger Boy.",
-        numberEpisodes = 5
-    ) {}
-}
+//@Preview
+//@Composable
+//fun SeasonCardPreview() {
+//    SeasonCard(
+//        numberSeason = 1,
+//        detail = "As the rest of the team face their worst fears, Noodle Burger Boy.",
+//        numberEpisodes = 5
+//    ) {}
+//}

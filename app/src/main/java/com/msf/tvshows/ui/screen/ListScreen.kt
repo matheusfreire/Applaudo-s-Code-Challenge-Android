@@ -1,6 +1,9 @@
 package com.msf.tvshows.ui.screen
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -49,7 +52,11 @@ fun ShowListScreen(
 ) {
     Box(modifier = modifier) {
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(minSize = LocalConfiguration.current.screenWidthDp.dp / 2)
+            columns = GridCells.Fixed(2),
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(items = shows) { show ->
                 ShowCard(show = show) {

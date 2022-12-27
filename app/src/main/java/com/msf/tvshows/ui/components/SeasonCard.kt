@@ -3,17 +3,17 @@ package com.msf.tvshows.ui.components
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
@@ -34,9 +34,10 @@ import com.msf.tvshows.model.detail.Season
 fun SeasonCard(season: Season, onClick: () -> Unit) {
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .clip(shape = RoundedCornerShape(size = 8.dp)),
+            .height(height = 147.dp)
+            .fillMaxWidth(),
         onClick = { onClick.invoke() },
+        shape = RoundedCornerShape(size = 8.dp),
         elevation = 8.dp
     ) {
         Row {
@@ -48,7 +49,7 @@ fun SeasonCard(season: Season, onClick: () -> Unit) {
                 placeholder = painterResource(R.drawable.ic_placeholder),
                 contentDescription = null,
                 contentScale = ContentScale.FillBounds,
-                modifier = Modifier.size(width = 112.dp, height = 147.dp)
+                modifier = Modifier.fillMaxHeight().width(112.dp)
             )
             Column(modifier = Modifier.padding(all = 16.dp)) {
                 Text(
@@ -79,12 +80,18 @@ fun SeasonCard(season: Season, onClick: () -> Unit) {
     }
 }
 
-//@Preview
-//@Composable
-//fun SeasonCardPreview() {
-//    SeasonCard(
-//        numberSeason = 1,
-//        detail = "As the rest of the team face their worst fears, Noodle Burger Boy.",
-//        numberEpisodes = 5
-//    ) {}
-//}
+@Preview
+@Composable
+fun SeasonCardPreview() {
+    SeasonCard(
+        season = Season(
+            "",
+            7,
+            1,
+            "",
+            "As the rest of the team face their worst fears, Noodle Burger Boy.",
+            "",
+            1
+        )
+    ) {}
+}

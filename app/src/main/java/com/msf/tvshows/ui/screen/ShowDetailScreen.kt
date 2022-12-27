@@ -1,15 +1,12 @@
 package com.msf.tvshows.ui.screen // ktlint-disable filename
 
-import androidx.compose.foundation.gestures.Orientation
-import androidx.compose.foundation.gestures.scrollable
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -43,38 +40,37 @@ fun ShowDetail(
 
 @Composable
 fun BodyDetail(detailResponse: DetailResponse) {
-    val scrollState = rememberScrollState()
-    Box(
-        modifier = Modifier.scrollable(
-            state = scrollState,
-            orientation = Orientation.Vertical
-        ).padding(
-            top = 24.dp,
-            bottom = 32.dp,
-            start = 16.dp,
-            end = 16.dp
-        )
+    Column(
+        modifier = Modifier
+            .verticalScroll(rememberScrollState())
+            .padding(
+                top = 24.dp,
+                bottom = 32.dp,
+                start = 16.dp,
+                end = 16.dp
+            )
     ) {
-        Column {
-            Text(
-                text = "Summary",
-                color = colorResource(id = R.color.primary),
-                fontWeight = FontWeight(500),
-                fontSize = 20.sp,
-                lineHeight = 23.44.sp
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = detailResponse.overview,
-                color = colorResource(id = R.color.text),
-                fontWeight = FontWeight(400),
-                fontSize = 14.sp,
-                lineHeight = 20.sp
-            )
-            LazyColumn {
-                items(detailResponse.seasons) { season ->
-                    SeasonCard(season) {}
-                }
+        Text(
+            text = "Summary",
+            color = colorResource(id = R.color.primary),
+            fontWeight = FontWeight(500),
+            fontSize = 20.sp,
+            lineHeight = 23.44.sp
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = detailResponse.overview,
+            color = colorResource(id = R.color.text),
+            fontWeight = FontWeight(400),
+            fontSize = 14.sp,
+            lineHeight = 20.sp
+        )
+        Column(
+            modifier = Modifier.padding(top = 16.dp, bottom = 16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            detailResponse.seasons.forEach { season ->
+                SeasonCard(season) {}
             }
         }
     }

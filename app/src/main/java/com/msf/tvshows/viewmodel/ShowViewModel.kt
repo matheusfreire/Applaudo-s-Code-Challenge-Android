@@ -2,48 +2,27 @@ package com.msf.tvshows.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.msf.tvshows.network.ResultWrapper
-import com.msf.tvshows.usecase.ShowListUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.launch
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.msf.tvshows.model.list.Show
+import com.msf.tvshows.network.ListDataSource
+import kotlinx.coroutines.flow.Flow
 
-class ShowViewModel(private val listUseCase: ShowListUseCase) : ViewModel() {
-
-    private val _uiState = MutableStateFlow<UiState>(UiState.Loading(true))
-    val uiState: StateFlow<UiState> = _uiState.asStateFlow()
+class ShowViewModel(private val listDataSource: ListDataSource) : ViewModel() {
 
     var selectedFilter: FilterType = FilterType.TOP_RATED
         private set
 
-    init {
-        fetchShowList(FilterType.TOP_RATED)
-    }
-
-    fun fetchShowList(filter: FilterType, page: Int = 1, shouldLoading: Boolean = true) {
+    fun fetchShowList(filter: FilterType): Flow<PagingData<Show>> {
         selectedFilter = filter
-        if (shouldLoading) {
-            _uiState.value = UiState.Loading(true)
-        }
-        viewModelScope.launch {
-            listUseCase(
-                scope = viewModelScope,
-                params = filter.filterName,
-                onError = { throwable ->
-                    val message = throwable.message ?: ""
-                    _uiState.value = UiState.Error(message)
-                },
-                onSuccess = { result ->
-                    when (result) {
-                        is ResultWrapper.Success -> {
-                            _uiState.value = UiState.Loaded(result.value)
-                        }
-                        is ResultWrapper.GenericError -> _uiState.value = UiState.Error(result.error ?: "")
-                        else -> _uiState.value = UiState.Empty
-                    }
-                }
-            )
-        }
+        listDataSource.setFilterType(filter)
+        return Pager(
+            config = PagingConfig(pageSize = 20),
+            pagingSourceFactory = {
+                listDataSource
+            }
+        ).flow.cachedIn(viewModelScope)
     }
 }

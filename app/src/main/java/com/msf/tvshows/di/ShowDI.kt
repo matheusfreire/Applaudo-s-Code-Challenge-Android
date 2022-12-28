@@ -5,7 +5,6 @@ import com.msf.tvshows.core.RequestWrapper
 import com.msf.tvshows.core.RequestWrapperImpl
 import com.msf.tvshows.network.ListDataSource
 import com.msf.tvshows.usecase.DetailUseCase
-import com.msf.tvshows.usecase.ShowListUseCase
 import com.msf.tvshows.viewmodel.DetailViewModel
 import com.msf.tvshows.viewmodel.ShowViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -16,15 +15,8 @@ object ShowDI {
         single { CoroutinesContextProvider() }
         factory<RequestWrapper> { RequestWrapperImpl() }
         single {
-            ShowListUseCase(
-                repository = get(),
-                contextProvider = get(),
-                requestWrapper = get()
-            )
-        }
-        single {
             ListDataSource(
-                service = get()
+                showRepository = get()
             )
         }
         single {
@@ -34,7 +26,7 @@ object ShowDI {
                 requestWrapper = get()
             )
         }
-        viewModel { ShowViewModel(listUseCase = get()) }
+        viewModel { ShowViewModel(listDataSource = get()) }
         viewModel { DetailViewModel(detailUseCase = get()) }
     }
 }

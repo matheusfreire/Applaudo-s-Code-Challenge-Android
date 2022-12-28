@@ -9,7 +9,7 @@ import retrofit2.HttpException
 
 class ShowRepositoryImpl(private val service: TvShowService) : ShowRepository {
     override suspend fun fetchShowList(filter: String, page: Int): ResultWrapper<ShowResponse> = try {
-        val showsResponse = service.callShowsFiltered(filter, "d491c13d0f83cf3eb7d60cf61339b370", page)
+        val showsResponse = service.callShowsFiltered(filter, page)
         ResultWrapper.Success(showsResponse)
     } catch (e: HttpException) {
         ResultWrapper.GenericError(e.code(), e.message())

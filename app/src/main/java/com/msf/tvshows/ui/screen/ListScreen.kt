@@ -10,16 +10,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.flowlayout.FlowRow
 import com.msf.tvshows.R
 import com.msf.tvshows.model.list.Show
@@ -28,7 +31,6 @@ import com.msf.tvshows.ui.components.Loading
 import com.msf.tvshows.ui.components.ShowCard
 import com.msf.tvshows.viewmodel.FilterType
 import com.msf.tvshows.viewmodel.ShowViewModel
-import com.msf.tvshows.viewmodel.UiState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -37,7 +39,7 @@ fun ListScreen(
     showViewModel: ShowViewModel = koinViewModel(),
     onShowClicked: (Int) -> Unit
 ) {
-    val uiState by showViewModel.uiState.collectAsState()
+    val uiState = showViewModel.fetchShowList(showViewModel.selectedFilter).collectAsLazyPagingItems()
     Scaffold(
         topBar = {
             androidx.compose.material.TopAppBar(
@@ -71,23 +73,15 @@ fun ListScreen(
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
-            when (uiState) {
-                is UiState.Loading -> Loading()
-                is UiState.Loaded<*> -> ShowListScreen(
-                    shows = (uiState as UiState.Loaded<*>).value as List<Show>,
-                    onShowClicked = onShowClicked
-                ) { showViewModel.fetchShowList(filter = showViewModel.selectedFilter, 2, false) }
-                else -> Loading()
-            }
+            ShowListScreen(shows = uiState, onShowClicked = onShowClicked)
         }
     }
 }
 
 @Composable
 fun ShowListScreen(
-    shows: List<Show>,
+    shows: LazyPagingItems<Show>,
     onShowClicked: (Int) -> Unit,
-    onReachEnd: () -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -96,10 +90,45 @@ fun ShowListScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(items = shows) { show ->
+        when (val state = shows.loadState.prepend) {
+            is LoadState.NotLoading -> Unit
+            is LoadState.Loading -> {
+                Loading()
+            }
+            is LoadState.Error -> {
+                // TODO
+            }
+        }
+        when (val state = shows.loadState.refresh) {
+            is LoadState.NotLoading -> Unit
+            is LoadState.Loading -> {
+                Loading()
+            }
+            is LoadState.Error -> {
+                // TODO
+            }
+        }
+        items(
+            items = shows.itemSnapshotList.items
+        ) { show ->
             ShowCard(show = show) {
                 onShowClicked.invoke(show.id)
             }
         }
+        when (val state = shows.loadState.append) {
+            is LoadState.NotLoading -> Unit
+            is LoadState.Loading -> {
+                Loading()
+            }
+            is LoadState.Error -> {
+                // TODO
+            }
+        }
+    }
+}
+
+private fun LazyGridScope.Loading() {
+    item {
+        CircularProgressIndicator(modifier = Modifier.padding(16.dp))
     }
 }

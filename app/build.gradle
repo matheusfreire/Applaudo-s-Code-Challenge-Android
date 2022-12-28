@@ -74,6 +74,8 @@ dependencies {
     implementation AndroidLibs.coroutines_android
     implementation AndroidLibs.coroutines_core
     implementation AndroidLibs.compose_navigation
+    implementation AndroidLibs.accompanist_flow
+    implementation "androidx.paging:paging-compose:1.0.0-alpha17"
     implementation TestLibs.espresso_idling_resource
 
     /**

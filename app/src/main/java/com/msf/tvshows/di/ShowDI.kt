@@ -3,6 +3,7 @@ package com.msf.tvshows.di
 import com.msf.tvshows.core.CoroutinesContextProvider
 import com.msf.tvshows.core.RequestWrapper
 import com.msf.tvshows.core.RequestWrapperImpl
+import com.msf.tvshows.network.ListDataSource
 import com.msf.tvshows.usecase.DetailUseCase
 import com.msf.tvshows.usecase.ShowListUseCase
 import com.msf.tvshows.viewmodel.DetailViewModel
@@ -19,6 +20,11 @@ object ShowDI {
                 repository = get(),
                 contextProvider = get(),
                 requestWrapper = get()
+            )
+        }
+        single {
+            ListDataSource(
+                service = get()
             )
         }
         single {

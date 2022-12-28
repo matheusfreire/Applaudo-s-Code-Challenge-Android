@@ -11,6 +11,10 @@ interface TvShowService {
     @GET("{id}")
     suspend fun callDetail(@Path("id") code: Long, @Query("api_key") apiKey: String): DetailResponse
 
-    @GET("{filter}?language=en-US&page=1")
-    suspend fun callShowsFiltered(@Path("filter") filer: String, @Query("api_key") apiKey: String): ShowResponse
+    @GET("{filter}?language=en-US")
+    suspend fun callShowsFiltered(
+        @Path("filter") filer: String,
+        @Query("api_key") apiKey: String,
+        @Query("page") page: Int
+    ): ShowResponse
 }

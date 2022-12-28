@@ -19,7 +19,7 @@ import com.msf.tvshows.R
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChipFilter(
+fun FilterChip(
     isSelected: Boolean,
     text: String,
     onClick: (Boolean) -> Unit
@@ -53,7 +53,7 @@ fun ChipFilter(
 @Composable
 fun ChipPreview() {
     Column {
-        ChipFilter(isSelected = false, text = "Not selected", onClick = {})
-        ChipFilter(isSelected = true, text = "Selected", onClick = {})
+        FilterChip(isSelected = false, text = "Option", onClick = {})
+        FilterChip(isSelected = true, text = "Option", onClick = {})
     }
 }

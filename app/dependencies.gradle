@@ -31,7 +31,8 @@ ext {
         google_play_core_ktx_version: "1.8.1",
         lifecycle_runtime_version   : "2.5.1",
         activity_compose_version    : "1.6.1",
-        nav_version                 : "2.5.3"
+        nav_version                 : "2.5.3",
+        accompanist_version         : "0.28.0"
     ]
 
     AndroidLibs = [
@@ -48,7 +49,8 @@ ext {
         compose_tooling_preview: "androidx.compose.ui:ui-tooling-preview:$Versions.composeVersion",
         compose_tooling        : "androidx.compose.ui:ui-tooling:$Versions.composeVersion",
         compose_manifest       : "androidx.compose.ui:ui-test-manifest:$Versions.composeVersion",
-        compose_navigation     : "androidx.navigation:navigation-compose:$AndroidLibsVersions.nav_version"
+        compose_navigation     : "androidx.navigation:navigation-compose:$AndroidLibsVersions.nav_version",
+        accompanist_flow        :"com.google.accompanist:accompanist-flowlayout:$AndroidLibsVersions.accompanist_version"
     ]
 
     ThirdLibsVersion = [

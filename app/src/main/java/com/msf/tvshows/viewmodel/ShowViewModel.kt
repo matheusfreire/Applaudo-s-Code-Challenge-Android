@@ -12,11 +12,7 @@ import kotlinx.coroutines.flow.Flow
 
 class ShowViewModel(private val listDataSource: ListDataSource) : ViewModel() {
 
-    var selectedFilter: FilterType = FilterType.TOP_RATED
-        private set
-
     fun fetchShowList(filter: FilterType): Flow<PagingData<Show>> {
-        selectedFilter = filter
         listDataSource.setFilterType(filter)
         return Pager(
             config = PagingConfig(pageSize = 20),

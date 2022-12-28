@@ -17,6 +17,10 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
@@ -27,7 +31,6 @@ import com.google.accompanist.flowlayout.FlowRow
 import com.msf.tvshows.R
 import com.msf.tvshows.model.list.Show
 import com.msf.tvshows.ui.components.FilterChip
-import com.msf.tvshows.ui.components.Loading
 import com.msf.tvshows.ui.components.ShowCard
 import com.msf.tvshows.viewmodel.FilterType
 import com.msf.tvshows.viewmodel.ShowViewModel
@@ -39,7 +42,10 @@ fun ListScreen(
     showViewModel: ShowViewModel = koinViewModel(),
     onShowClicked: (Int) -> Unit
 ) {
-    val uiState = showViewModel.fetchShowList(showViewModel.selectedFilter).collectAsLazyPagingItems()
+    var filterSelected by rememberSaveable {
+        mutableStateOf(FilterType.TOP_RATED)
+    }
+    val uiState = showViewModel.fetchShowList(filterSelected).collectAsLazyPagingItems()
     Scaffold(
         topBar = {
             androidx.compose.material.TopAppBar(
@@ -65,9 +71,9 @@ fun ListScreen(
                 FilterType.values().forEach { filter ->
                     Box(modifier = Modifier.padding(end = 8.dp)) {
                         FilterChip(
-                            isSelected = showViewModel.selectedFilter == filter,
+                            isSelected = filterSelected == filter,
                             text = filter.presentName,
-                            onClick = { showViewModel.fetchShowList(filter) }
+                            onClick = { filterSelected = filter}
                         )
                     }
                 }
@@ -81,7 +87,7 @@ fun ListScreen(
 @Composable
 fun ShowListScreen(
     shows: LazyPagingItems<Show>,
-    onShowClicked: (Int) -> Unit,
+    onShowClicked: (Int) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),

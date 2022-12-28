@@ -19,6 +19,7 @@ class ListDataSource(
         if (lastFilter != filterType) {
             actualPage = 1
         }
+        lastFilter = filterType
     }
 
     override fun getRefreshKey(state: PagingState<Int, Show>): Int? = state.anchorPosition
@@ -26,7 +27,7 @@ class ListDataSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Show> {
         return try {
             val page = params.key ?: 1
-            return when (val result = showRepository.fetchShowList("top_rated", page)) {
+            return when (val result = showRepository.fetchShowList(lastFilter.filterName, page)) {
                 is ResultWrapper.Success -> handleSuccess(result, params)
                 is ResultWrapper.GenericError -> throw Exception(result.error)
                 is ResultWrapper.NetworkError -> throw Exception("Network")

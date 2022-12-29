@@ -1,7 +1,6 @@
 package com.msf.tvshows.model.list
 
 import com.google.gson.annotations.SerializedName
-import com.msf.tvshows.model.list.Show
 
 data class ShowResponse(
     val page: Int,

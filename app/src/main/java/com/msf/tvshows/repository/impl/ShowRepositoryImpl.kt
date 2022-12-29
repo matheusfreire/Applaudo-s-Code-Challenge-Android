@@ -18,7 +18,7 @@ class ShowRepositoryImpl(private val service: TvShowService) : ShowRepository {
     }
 
     override suspend fun getShowDetail(id: Long): ResultWrapper<DetailResponse> = try {
-        val detailResponse = service.callDetail(id, "d491c13d0f83cf3eb7d60cf61339b370")
+        val detailResponse = service.callDetail(id)
         ResultWrapper.Success(detailResponse)
     } catch (e: HttpException) {
         ResultWrapper.GenericError(e.code(), e.message())

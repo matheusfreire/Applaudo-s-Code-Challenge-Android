@@ -6,9 +6,33 @@ import com.msf.tvshows.model.detail.Genre
 import com.msf.tvshows.model.detail.LastEpisodeToAir
 import com.msf.tvshows.model.detail.Season
 import com.msf.tvshows.model.detail.SpokenLanguage
+import com.msf.tvshows.model.list.Show
+import com.msf.tvshows.model.list.ShowResponse
 
 object StubFactory {
 
+    val showResponse = ShowResponse(
+        page = 1,
+        results = listOf(
+            Show(
+                backdropPath = "",
+                firstAirDate = "",
+                genreIds = listOf(),
+                id = 1,
+                name = "Show Response Name",
+                originCountry = listOf(),
+                originalLanguage = "",
+                originalName = "",
+                overview = "",
+                popularity = 0.0,
+                posterPath = "",
+                voteAverage = 0.0,
+                voteCount = 1
+            )
+        ),
+        totalPages = 1,
+        totalResults = 1
+    )
     val detailResponse = DetailResponse(
         adult = false,
         backdrop_path = "",

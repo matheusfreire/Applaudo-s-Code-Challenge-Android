@@ -1,5 +1,6 @@
 package com.msf.tvshows.network
 
+import androidx.annotation.VisibleForTesting
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.msf.tvshows.model.list.Show
@@ -11,9 +12,11 @@ class ListDataSource(
     private val showRepository: ShowRepository
 ) : PagingSource<Int, Show>() {
 
-    private var actualPage = 1
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var actualPage = 1
 
-    private var lastFilter: FilterType = FilterType.TOP_RATED
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    var lastFilter: FilterType = FilterType.TOP_RATED
 
     fun setFilterType(filterType: FilterType) {
         if (lastFilter != filterType) {

@@ -10,7 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.msf.tvshows.ui.screen.ListScreen
 import com.msf.tvshows.ui.screen.ShowDetail
-import com.msf.tvshows.ui.screen.TvShowScreen
+import com.msf.tvshows.ui.screen.SplashScreen
+import com.msf.tvshows.ui.screen.Screen
 
 @Composable
 fun TvShowHost(
@@ -19,14 +20,21 @@ fun TvShowHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = TvShowScreen.LIST.path,
+        startDestination = Screen.Splash.path,
         modifier = modifier
     ) {
-        composable(route = TvShowScreen.LIST.path) {
+        composable(route = Screen.Splash.path) {
+            SplashScreen {
+                navController.navigate(
+                    Screen.List.path
+                )
+            }
+        }
+        composable(route = Screen.List.path) {
             ListScreen(
                 onShowClicked = {
                     navController.navigate(
-                        TvShowScreen.SHOW_DETAIL.path.replace(
+                        Screen.ShowDetail.path.replace(
                             oldValue = "{ID}",
                             newValue = "$it"
                         )
@@ -35,7 +43,7 @@ fun TvShowHost(
             )
         }
         composable(
-            route = TvShowScreen.SHOW_DETAIL.path,
+            route = Screen.ShowDetail.path,
             arguments = listOf(
                 navArgument("ID") {
                     defaultValue = 0

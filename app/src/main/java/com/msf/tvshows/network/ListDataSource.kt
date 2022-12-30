@@ -34,7 +34,6 @@ class ListDataSource(
                 is ResultWrapper.Success -> handleSuccess(result, params)
                 is ResultWrapper.GenericError -> throw Exception(result.error)
                 is ResultWrapper.NetworkError -> throw Exception("Network")
-                else -> throw Exception("Generic exception")
             }
         } catch (e: Exception) {
             LoadResult.Error(e)
@@ -46,7 +45,7 @@ class ListDataSource(
         params: LoadParams<Int>
     ): LoadResult.Page<Int, Show> {
         return LoadResult.Page(
-            data = result.value.results,
+            data = result.value.shows,
             prevKey = params.key,
             nextKey = params.key?.plus(1)
         )

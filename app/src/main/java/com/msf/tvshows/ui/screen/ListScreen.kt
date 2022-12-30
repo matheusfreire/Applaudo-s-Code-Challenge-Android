@@ -9,30 +9,42 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyGridScope
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.Button
+import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Warning
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
+import androidx.paging.LoadStates
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.flowlayout.FlowRow
 import com.msf.tvshows.R
-import com.msf.tvshows.extensions.Network
+import com.msf.tvshows.extensions.isInternetAvailable
 import com.msf.tvshows.model.list.Show
 import com.msf.tvshows.ui.components.FilterChip
+import com.msf.tvshows.ui.components.Loading
 import com.msf.tvshows.ui.components.Message
 import com.msf.tvshows.ui.components.ShowCard
 import com.msf.tvshows.viewmodel.FilterType
@@ -83,7 +95,7 @@ fun ListScreen(
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
-            if (Network.isInternetAvailable(LocalContext.current)) {
+            if (LocalContext.current.isInternetAvailable()) {
                 ShowListScreen(shows = uiState, onShowClicked = onShowClicked)
             } else {
                 Message("No connection detected, please try again with connection")
@@ -104,20 +116,7 @@ fun ShowListScreen(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        when (val state = shows.loadState.prepend) {
-            is LoadState.NotLoading -> Unit
-            is LoadState.Loading -> {
-                Loading()
-            }
-            is LoadState.Error -> Unit
-        }
-        when (val state = shows.loadState.refresh) {
-            is LoadState.NotLoading -> Unit
-            is LoadState.Loading -> {
-                Loading()
-            }
-            is LoadState.Error -> Unit
-        }
+        val loadState = shows.loadState.mediator
         items(
             items = shows.itemSnapshotList.items
         ) { show ->
@@ -125,17 +124,72 @@ fun ShowListScreen(
                 onShowClicked.invoke(show.id)
             }
         }
-        when (val state = shows.loadState.append) {
-            is LoadState.NotLoading -> Unit
-            is LoadState.Loading -> {
-                Loading()
-            }
-            is LoadState.Error -> Unit
+        if (loadState?.refresh == LoadState.Loading) {
+            BoxLoading()
+        }
+        if (loadState?.append == LoadState.Loading) {
+           LoadingItem()
+        }
+        if (loadState?.refresh is LoadState.Error || loadState?.append is LoadState.Error) {
+            ErrorView(loadState, shows)
         }
     }
 }
 
-private fun LazyGridScope.Loading() {
+private fun LazyGridScope.ErrorView(loadState: LoadStates, shows: LazyPagingItems<Show>) {
+    item {
+        val isPaginatingError = (loadState.append is LoadState.Error) || shows.itemCount > 1
+        val error = if (loadState.append is LoadState.Error) {
+            (loadState.append as LoadState.Error).error
+        } else {
+            (loadState.refresh as LoadState.Error).error
+        }
+        val modifier = if (isPaginatingError) {
+            Modifier.padding(8.dp)
+        } else {
+            Modifier.fillMaxSize()
+        }
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            if (!isPaginatingError) {
+                Icon(
+                    modifier = Modifier
+                        .size(64.dp),
+                    imageVector = Icons.Rounded.Warning, contentDescription = null
+                )
+            }
+            Text(
+                modifier = Modifier
+                    .padding(8.dp),
+                text = error.message ?: error.toString(),
+                textAlign = TextAlign.Center,
+            )
+            Button(
+                onClick = {
+                    shows.refresh()
+                },
+                content = {
+                    Text(text = "Refresh")
+                },
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.primary,
+                    contentColor = Color.White,
+                )
+            )
+        }
+    }
+}
+
+private fun LazyGridScope.BoxLoading() {
+    item {
+        Loading()
+    }
+}
+
+private fun LazyGridScope.LoadingItem() {
     item {
         CircularProgressIndicator(modifier = Modifier.padding(16.dp))
     }

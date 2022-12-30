@@ -47,7 +47,7 @@ internal class ListDataSourceTest {
             )
         ) shouldBe
             PagingSource.LoadResult.Page(
-                data = StubFactory.showResponse.results,
+                data = StubFactory.showResponse.shows,
                 prevKey = null,
                 nextKey = null
             )
@@ -65,7 +65,6 @@ internal class ListDataSourceTest {
             )
         )
         load.shouldBeInstanceOf<PagingSource.LoadResult.Error<Int, Show>>()
-//        load shouldBe PagingSource.LoadResult.Error(Exception("error"))
     }
 
     @Test
@@ -80,6 +79,5 @@ internal class ListDataSourceTest {
             )
         )
         load.shouldBeInstanceOf<PagingSource.LoadResult.Error<Int, Show>>()
-//        load shouldBe PagingSource.LoadResult.Error(Exception("Network"))
     }
 }

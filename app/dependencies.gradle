@@ -32,7 +32,8 @@ ext {
         lifecycle_runtime_version   : "2.5.1",
         activity_compose_version    : "1.6.1",
         nav_version                 : "2.5.3",
-        accompanist_version         : "0.28.0"
+        accompanist_version         : "0.28.0",
+        room_version                : "2.4.3"
     ]
 
     AndroidLibs = [
@@ -50,7 +51,10 @@ ext {
         compose_tooling        : "androidx.compose.ui:ui-tooling:$Versions.composeVersion",
         compose_manifest       : "androidx.compose.ui:ui-test-manifest:$Versions.composeVersion",
         compose_navigation     : "androidx.navigation:navigation-compose:$AndroidLibsVersions.nav_version",
-        accompanist_flow        :"com.google.accompanist:accompanist-flowlayout:$AndroidLibsVersions.accompanist_version"
+        accompanist_flow       : "com.google.accompanist:accompanist-flowlayout:$AndroidLibsVersions.accompanist_version",
+        room_runtime           : "androidx.room:room-runtime:$AndroidLibsVersions.room_version",
+        room_ktx               : "androidx.room:room-ktx:$AndroidLibsVersions.room_version",
+        room_paging            : "androidx.room:room-paging:$AndroidLibsVersions.room_version"
     ]
 
     ThirdLibsVersion = [

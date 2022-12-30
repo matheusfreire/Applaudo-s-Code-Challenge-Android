@@ -1,6 +1,7 @@
 package com.msf.tvshows.core
 
 import android.app.Application
+import com.msf.tvshows.di.ShowDBDI
 import com.msf.tvshows.di.ShowDI
 import com.msf.tvshows.di.TvShowNetworkDI
 import com.msf.tvshows.di.TvShowRepositoryDI
@@ -12,6 +13,7 @@ class TvShowsApplication : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@TvShowsApplication)
+            modules(ShowDBDI.modules)
             modules(ShowDI.modules)
             modules(TvShowRepositoryDI.modules)
             modules(TvShowNetworkDI.modules)

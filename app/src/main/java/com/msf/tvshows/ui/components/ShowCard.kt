@@ -55,7 +55,7 @@ fun ShowCard(show: Show, onClick: () -> Unit) {
                     .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             ) {
                 Text(
-                    text = show.name,
+                    text = show.name ?: "",
                     color = colorResource(id = R.color.gray_text),
                     fontSize = 14.sp,
                     lineHeight = 24.sp,
@@ -88,17 +88,15 @@ fun ShowCardPreview() {
         show = Show(
             backdropPath = "",
             firstAirDate = "",
-            genreIds = listOf(),
             id = 1,
             name = "Name",
-            originCountry = listOf(),
             originalLanguage = "",
             originalName = "Name",
             overview = "",
-            10.0,
-            "",
-            5.0,
-            1
+            popularity = 10.0,
+            posterPath = "",
+            voteAverage = 5.0,
+            voteCount = 1
         )
     ) {}
 }

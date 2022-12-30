@@ -93,7 +93,7 @@ internal class ShowRepositoryImplTest {
         resultWrapper.shouldBeInstanceOf<ResultWrapper.Success<ShowResponse>>()
         (resultWrapper as ResultWrapper.Success<ShowResponse>).value shouldNotBe null
         resultWrapper.value.totalResults shouldBe 1
-        resultWrapper.value.results.size shouldBe 1
+        resultWrapper.value.shows.size shouldBe 1
         resultWrapper.value.page shouldBe 1
         resultWrapper.value.totalPages shouldBe 1
         resultWrapper.value.shouldBeSameInstanceAs(StubFactory.showResponse)
@@ -137,7 +137,7 @@ internal class ShowRepositoryImplTest {
         resultWrapper.shouldBeInstanceOf<ResultWrapper.Success<ShowResponse>>()
         (resultWrapper as ResultWrapper.Success<ShowResponse>).value shouldNotBe null
         resultWrapper.value.totalResults shouldBe 1
-        resultWrapper.value.results.size shouldBe 1
+        resultWrapper.value.shows.size shouldBe 1
         resultWrapper.value.page shouldBe 1
         resultWrapper.value.totalPages shouldBe 1
         resultWrapper.value.shouldBeSameInstanceAs(StubFactory.showResponse)

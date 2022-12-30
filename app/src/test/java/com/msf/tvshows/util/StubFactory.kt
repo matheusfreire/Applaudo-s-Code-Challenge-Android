@@ -13,7 +13,7 @@ object StubFactory {
 
     val showResponse = ShowResponse(
         page = 1,
-        results = listOf(
+        shows = listOf(
             Show(
                 backdropPath = "",
                 firstAirDate = "",

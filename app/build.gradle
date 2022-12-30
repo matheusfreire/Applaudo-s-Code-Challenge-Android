@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
 }
 
 apply from: 'dependencies.gradle'
@@ -23,6 +24,7 @@ android {
         }
         buildConfigField("String", "BASE_URL",'"https://api.themoviedb.org/3/tv/"')
         buildConfigField("String", "IMAGE_URL",'"http://image.tmdb.org/t/p/w185/"')
+        buildConfigField("String", "API_KEY",'"CHANGEME"')
     }
 
     buildTypes {
@@ -77,6 +79,10 @@ dependencies {
     implementation AndroidLibs.accompanist_flow
     implementation "androidx.paging:paging-compose:1.0.0-alpha17"
     implementation TestLibs.espresso_idling_resource
+    kapt "androidx.room:room-compiler:$AndroidLibsVersions.room_version"
+    implementation AndroidLibs.room_ktx
+    implementation AndroidLibs.room_runtime
+    implementation AndroidLibs.room_paging
 
     /**
      * Unit test dependencies

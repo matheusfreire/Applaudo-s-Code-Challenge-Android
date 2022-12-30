@@ -31,6 +31,7 @@ import androidx.navigation.NavHostController
 import com.msf.tvshows.R
 import com.msf.tvshows.model.detail.DetailResponse
 import com.msf.tvshows.ui.components.Loading
+import com.msf.tvshows.ui.components.Message
 import com.msf.tvshows.ui.components.SeasonCard
 import com.msf.tvshows.viewmodel.DetailViewModel
 import com.msf.tvshows.viewmodel.UiState
@@ -91,7 +92,8 @@ fun ShowDetail(
                     title = detailResponse.name
                     BodyDetail(detailResponse)
                 }
-                else -> Loading()
+                is UiState.Error -> Message(message = (uiState as UiState.Error).message, true)
+                else -> Message(message = "Please, try again", true)
             }
         }
     }

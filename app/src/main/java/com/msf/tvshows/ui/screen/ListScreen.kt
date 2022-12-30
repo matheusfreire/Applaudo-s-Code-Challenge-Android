@@ -22,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
@@ -29,8 +30,10 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.google.accompanist.flowlayout.FlowRow
 import com.msf.tvshows.R
+import com.msf.tvshows.extensions.Network
 import com.msf.tvshows.model.list.Show
 import com.msf.tvshows.ui.components.FilterChip
+import com.msf.tvshows.ui.components.Message
 import com.msf.tvshows.ui.components.ShowCard
 import com.msf.tvshows.viewmodel.FilterType
 import com.msf.tvshows.viewmodel.ShowViewModel
@@ -46,6 +49,7 @@ fun ListScreen(
         mutableStateOf(FilterType.TOP_RATED)
     }
     val uiState = showViewModel.fetchShowList(filterSelected).collectAsLazyPagingItems()
+
     Scaffold(
         topBar = {
             androidx.compose.material.TopAppBar(
@@ -73,13 +77,17 @@ fun ListScreen(
                         FilterChip(
                             isSelected = filterSelected == filter,
                             text = filter.presentName,
-                            onClick = { filterSelected = filter}
+                            onClick = { filterSelected = filter }
                         )
                     }
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
-            ShowListScreen(shows = uiState, onShowClicked = onShowClicked)
+            if (Network.isInternetAvailable(LocalContext.current)) {
+                ShowListScreen(shows = uiState, onShowClicked = onShowClicked)
+            } else {
+                Message("No connection detected, please try again with connection")
+            }
         }
     }
 }
@@ -101,18 +109,14 @@ fun ShowListScreen(
             is LoadState.Loading -> {
                 Loading()
             }
-            is LoadState.Error -> {
-                // TODO
-            }
+            is LoadState.Error -> Unit
         }
         when (val state = shows.loadState.refresh) {
             is LoadState.NotLoading -> Unit
             is LoadState.Loading -> {
                 Loading()
             }
-            is LoadState.Error -> {
-                // TODO
-            }
+            is LoadState.Error -> Unit
         }
         items(
             items = shows.itemSnapshotList.items
@@ -126,9 +130,7 @@ fun ShowListScreen(
             is LoadState.Loading -> {
                 Loading()
             }
-            is LoadState.Error -> {
-                // TODO
-            }
+            is LoadState.Error -> Unit
         }
     }
 }

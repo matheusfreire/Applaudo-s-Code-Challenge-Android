@@ -26,6 +26,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.msf.tvshows.BuildConfig
 import com.msf.tvshows.R
+import com.msf.tvshows.extensions.divideHalf
 import com.msf.tvshows.model.list.Show
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -65,9 +66,12 @@ fun ShowCard(show: Show, onClick: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.height(8.dp).fillMaxWidth())
                 Row(modifier = Modifier.height(24.dp)) {
-                    RatingBar(rating = 5.0, modifier = Modifier.size(width = 88.dp, height = 16.dp))
+                    RatingBar(
+                        rating = show.voteAverage.divideHalf(),
+                        modifier = Modifier.size(width = 88.dp, height = 16.dp)
+                    )
                     Text(
-                        text = 5.0.toString(),
+                        text = show.voteAverage.divideHalf().toString(),
                         color = colorResource(id = R.color.gray_text),
                         fontSize = 14.sp,
                         lineHeight = 20.sp,

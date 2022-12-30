@@ -1,31 +1,73 @@
 package com.msf.tvshows.model.detail
 
+import com.google.gson.annotations.SerializedName
+
 data class DetailResponse(
     val adult: Boolean,
-    val backdrop_path: String,
-    val created_by: List<CreatedBy>,
-    val first_air_date: String,
+
+    @SerializedName("backdrop_path")
+    val poster: String,
+
+    @SerializedName("created_by")
+    val createdBy: List<CreatedBy>,
+
+    @SerializedName("first_air_date")
+    val firstAirDate: String,
+
     val genres: List<Genre>,
+
     val homepage: String,
+
     val id: Int,
-    val in_production: Boolean,
+    @SerializedName("in_production")
+    val inProduction: Boolean,
+
     val languages: List<String>,
-    val last_air_date: String,
+
+    @SerializedName("last_air_date")
+    val lastAirDate: String,
+
+    @SerializedName("last_episode_to_air")
     val last_episode_to_air: LastEpisodeToAir,
+
     val name: String,
-    val number_of_episodes: Int,
-    val number_of_seasons: Int,
-    val origin_country: List<String>,
-    val original_language: String,
-    val original_name: String,
+
+    @SerializedName("number_of_episodes")
+    val numberOfEpisodes: Int,
+
+    @SerializedName("number_of_seasons")
+    val numberOfSeasons: Int,
+
+    @SerializedName("origin_country")
+    val originCountry: List<String>,
+
+    @SerializedName("original_language")
+    val originalLanguage: String,
+
+    @SerializedName("original_name")
+    val originalName: String,
+
     val overview: String,
+
     val popularity: Double,
-    val poster_path: String,
+
+    @SerializedName("poster_path")
+    val posterPath: String,
+
     val seasons: List<Season>,
-    val spoken_languages: List<SpokenLanguage>,
+
+    @SerializedName("spoken_languages")
+    val spokenLanguages: List<SpokenLanguage>,
+
     val status: String,
+
     val tagline: String,
+
     val type: String,
-    val vote_average: Double,
-    val vote_count: Int
+
+    @SerializedName("vote_average")
+    val voteAverage: Double,
+
+    @SerializedName("vote_count")
+    val voteCount: Int
 )

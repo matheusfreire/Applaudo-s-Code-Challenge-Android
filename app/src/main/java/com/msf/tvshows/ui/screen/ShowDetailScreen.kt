@@ -4,10 +4,14 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Card
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -22,16 +26,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.msf.tvshows.BuildConfig
 import com.msf.tvshows.R
+import com.msf.tvshows.extensions.divideHalf
 import com.msf.tvshows.model.detail.DetailResponse
 import com.msf.tvshows.ui.components.Loading
 import com.msf.tvshows.ui.components.Message
+import com.msf.tvshows.ui.components.RatingBar
 import com.msf.tvshows.ui.components.SeasonCard
 import com.msf.tvshows.viewmodel.DetailViewModel
 import com.msf.tvshows.viewmodel.UiState
@@ -44,22 +56,22 @@ fun ShowDetail(
     modifier: Modifier = Modifier,
     detailViewModel: DetailViewModel = koinViewModel()
 ) {
-    var title by remember {
-        mutableStateOf("")
+    var show: DetailResponse? by remember {
+        mutableStateOf(null)
     }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    if (title.isEmpty()) {
-                        CircularProgressIndicator(color = colorResource(id = R.color.white))
-                    } else {
-                        Text(
-                            text = title,
-                            modifier = Modifier.padding(vertical = 16.dp),
-                            color = colorResource(id = R.color.white)
-                        )
-                    }
+                    show?.let {
+                        Column(modifier = Modifier.padding(10.dp)) {
+                            Text(
+                                text = it.name,
+                                modifier = Modifier.padding(vertical = 16.dp),
+                                color = colorResource(id = R.color.white)
+                            )
+                        }
+                    } ?: CircularProgressIndicator(color = colorResource(id = R.color.white))
                 },
                 backgroundColor = colorResource(id = R.color.primary),
                 navigationIcon = if (navController.previousBackStackEntry != null) {
@@ -89,7 +101,7 @@ fun ShowDetail(
                 is UiState.Loading -> Loading()
                 is UiState.Loaded<*> -> {
                     val detailResponse = (uiState as UiState.Loaded<*>).value as DetailResponse
-                    title = detailResponse.name
+                    show = detailResponse
                     BodyDetail(detailResponse)
                 }
                 is UiState.Error -> Message(message = (uiState as UiState.Error).message, true)

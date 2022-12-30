@@ -35,8 +35,8 @@ object StubFactory {
     )
     val detailResponse = DetailResponse(
         adult = false,
-        backdrop_path = "",
-        created_by = listOf(
+        poster = "",
+        createdBy = listOf(
             CreatedBy(
                 credit_id = "",
                 gender = 1,
@@ -45,7 +45,7 @@ object StubFactory {
                 profile_path = ""
             )
         ),
-        first_air_date = "",
+        firstAirDate = "",
         genres = listOf(
             Genre(
                 id = 1,
@@ -54,9 +54,9 @@ object StubFactory {
         ),
         homepage = "",
         id = 1,
-        in_production = true,
+        inProduction = true,
         languages = listOf("en", "pt"),
-        last_air_date = "",
+        lastAirDate = "",
         last_episode_to_air = LastEpisodeToAir(
             air_date = "",
             episode_number = 1,
@@ -72,14 +72,14 @@ object StubFactory {
             vote_count = 1
         ),
         name = "",
-        number_of_episodes = 1,
-        number_of_seasons = 1,
-        origin_country = listOf("USA", "BR"),
-        original_language = "en",
-        original_name = "",
+        numberOfEpisodes = 1,
+        numberOfSeasons = 1,
+        originCountry = listOf("USA", "BR"),
+        originalLanguage = "en",
+        originalName = "",
         overview = "",
         popularity = 0.0,
-        poster_path = "",
+        posterPath = "",
         seasons = listOf(
             Season(
                 air_date = "",
@@ -91,7 +91,7 @@ object StubFactory {
                 season_number = 1
             )
         ),
-        spoken_languages = listOf(
+        spokenLanguages = listOf(
             SpokenLanguage(
                 english_name = "",
                 iso_639_1 = "",
@@ -101,7 +101,7 @@ object StubFactory {
         status = "",
         tagline = "",
         type = "",
-        vote_average = 0.0,
-        vote_count = 1
+        voteAverage = 0.0,
+        voteCount = 1
     )
 }

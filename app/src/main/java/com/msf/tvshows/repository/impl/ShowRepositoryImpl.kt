@@ -21,8 +21,10 @@ class ShowRepositoryImpl(private val service: TvShowService) : ShowRepository {
         val detailResponse = service.callDetail(id)
         ResultWrapper.Success(detailResponse)
     } catch (e: HttpException) {
+        println(e)
         ResultWrapper.GenericError(e.code(), e.message())
     } catch (e: Exception) {
+        println(e)
         ResultWrapper.GenericError(999, "Something weird happens")
     }
 }
